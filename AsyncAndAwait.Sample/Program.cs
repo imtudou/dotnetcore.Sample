@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -131,6 +132,14 @@ namespace AsyncAndAwait.Sample
             Thread.Sleep(14000);
             Console.WriteLine("洗衣服 (14s) Wash()...");
             return 0;
+        }
+
+        public async Task<string> GetHtmlAsync()
+        {
+            using (var client = new HttpClient())
+            {
+                return await client.GetStringAsync("http://www.baidu.com");
+            }
         }
     }
 }
