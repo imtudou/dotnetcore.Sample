@@ -9,136 +9,189 @@ namespace AsyncAndAwait.Sample
 
     /*
      点外卖场景：
-        1.点外卖（30分钟）DoTakeOut()...
-        2.看视频（4h）    WathcTv()...
-        3.洗衣服 (40分钟) Wash()...
-     
+        1.点外卖（3s）DoTakeOut()...
+        2.看视频（9s）WathcTv()...
+        3.洗衣服 (3s) Wash()...
      */
     class Program
     {
-        static void Main(string[] args)
+        static async void Main(string[] args)
         {
-            //Stopwatch stopwatch = new Stopwatch();
-            //stopwatch.Start();
-            //Console.WriteLine("Begin...");
-            //DoSomething();
-            //Console.WriteLine("End...");
-            //stopwatch.Stop();
-            //TimeSpan ts = stopwatch.Elapsed;
-            //// Format and display the TimeSpan value.
-            //string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-            //    ts.Hours, ts.Minutes, ts.Seconds,
-            //    ts.Milliseconds / 10);
-            //Console.WriteLine("同步执行共耗时:{0}s...",elapsedTime);
-            //Console.WriteLine("===================================");
+            //同步单线程执行
+            //Method1();//00:00:15.04s
 
-            //Stopwatch stopwatch1 = new Stopwatch();
-            //stopwatch1.Start();
-            //Console.WriteLine("Begin...");
-            //DoSomethingTask();
-            //Console.WriteLine("End...");
-            //stopwatch1.Stop();
-            //TimeSpan ts1 = stopwatch1.Elapsed;
-            //// Format and display the TimeSpan value.
-            //string elapsedTime1 = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-            //    ts1.Hours, ts1.Minutes, ts1.Seconds,
-            //    ts1.Milliseconds / 10);
-            //Console.WriteLine("异步执行共耗时:{0}s...", elapsedTime1);
+            //多线程执行
+            //Method1Task();//00:00:09.25s
 
 
+            //一个业务中存在多个线程，且需要对线程进行管理，相对麻烦，从而引出了异步方法。
+            /*
+                　观点结论1：从 Method1Async() 中可以得出一个结论，async中必须要有await运算符才能起到异步方法的作用，且await 运算符只能加在 系统类库默认提供的异步方法或者新线程（如：Task.Run）前面。
+             */
+            //Method1Async();//00:00:21.17s
+
+            Method2Async();//00:00:15.20s
+
+
+            Console.ReadKey();
+        }
+
+        static void Method1()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            Console.WriteLine("Begin...");
+
+            Console.WriteLine(DoTakeOut());
+            Console.WriteLine(WathcTv());
+            Console.WriteLine(Wash());
+
+            Console.WriteLine("End...");
+            stopwatch.Stop();
+            TimeSpan ts = stopwatch.Elapsed;
+            // Format and display the TimeSpan value.
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds,
+                ts.Milliseconds / 10);
+            Console.WriteLine("同步执行共耗时:{0}s...", elapsedTime);
+            Console.WriteLine("===================================");
+        }
+        static void Method1Task()
+        {
             Stopwatch stopwatch1 = new Stopwatch();
             stopwatch1.Start();
             Console.WriteLine("Begin...");
-            DoSomethingAsync();
+
+            var task1 = Task.Run(() =>
+            {
+                return DoTakeOut();
+            });
+            var task2 = Task.Run(() =>
+            {
+                return WathcTv();
+            });
+            var task3 = Task.Run(() =>
+            {
+                return Wash();
+            });
+
+            //主线程进行等待
+            Task.WaitAll(task1, task2, task3);
+            Console.WriteLine($"{task1.Result}");
+            Console.WriteLine($"{task2.Result}");
+            Console.WriteLine($"{task3.Result}");
+
+            Console.WriteLine("End...");
+            stopwatch1.Stop();
+            TimeSpan ts1 = stopwatch1.Elapsed;
+            // Format and display the TimeSpan value.
+            string elapsedTime1 = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts1.Hours, ts1.Minutes, ts1.Seconds,
+                ts1.Milliseconds / 10);
+            Console.WriteLine("多线程执行共耗时:{0}s...", elapsedTime1);
+        }
+        static void Method1Async()
+        {
+            Stopwatch stopwatch1 = new Stopwatch();
+            stopwatch1.Start();
+            Console.WriteLine("Begin...");
+
+            Console.WriteLine(DoTakeOut1Async().Result);
+            Console.WriteLine(Wash1Async().Result);
+            Console.WriteLine(WathcTv1Async().Result);
+
             Console.WriteLine("End...");
             stopwatch1.Stop();
             TimeSpan ts1 = stopwatch1.Elapsed;
             string elapsedTime1 = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                 ts1.Hours, ts1.Minutes, ts1.Seconds,
                 ts1.Milliseconds / 10);
-            Console.WriteLine("异步执行共耗时:{0}s...", elapsedTime1);
+            Console.WriteLine("异步方法执行共耗时:{0}s...", elapsedTime1);
+        }
+        static async void Method2Async()
+        {
+            Stopwatch stopwatch1 = new Stopwatch();
+            stopwatch1.Start();
+            Console.WriteLine("Begin...");
+            var result1 = await DoTakeOut2Async();
+            var result2 = await Wash2Async();
+            var result3 = await WathcTv2Async();
+            Console.WriteLine(result1);
+            Console.WriteLine(result2);
+            Console.WriteLine(result3);
 
-
-
-
-
-
-            Console.ReadKey();
+            Console.WriteLine("End...");
+            stopwatch1.Stop();
+            TimeSpan ts1 = stopwatch1.Elapsed;
+            string elapsedTime1 = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts1.Hours, ts1.Minutes, ts1.Seconds,
+                ts1.Milliseconds / 10);
+            Console.WriteLine("异步方法执行共耗时:{0}s...", elapsedTime1);
         }
 
 
-        static void DoSomething()
+
+
+        static string DoTakeOut()
         {
-            DoTakeOut();
-            WathcTv();
-            Wash();
+            Thread.Sleep(3000);
+            return "点外卖3s";
+        }
+        static string Wash()
+        {
+            Thread.Sleep(3000);
+            return "洗衣服3s";
+        }
+        static string WathcTv()
+        {
+            Thread.Sleep(9000);
+            return "看视频9s";
         }
 
-        static void DoSomethingTask()
+        static async Task<string> DoTakeOut1Async()
         {
-            Task task1 = new Task(() => DoTakeOut());
-            Task task2 = new Task(() => WathcTv());
-            Task task3 = new Task(() => Wash());
-            task1.Start();
-            task2.Start();
-            task3.Start();
-            Task.WaitAll(task1, task2, task3);
+            Thread.Sleep(3000);
+            return "点外卖3s";
+        }
+        static async Task<string> Wash1Async()
+        {
+            Thread.Sleep(3000);
+            return "洗衣服3s";
+        }
+        static async Task<string> WathcTv1Async()
+        {
+            Thread.Sleep(9000);
+            return "看视频9s";
         }
 
-
-        async static void DoSomethingAsync()
+        static async Task<string> DoTakeOut2Async()
         {
-            await DoTakeOutAsync();
-            await WathcTvAsync();
-            await WashAsync();
-        }   
-
-        static void DoTakeOut()
-        {
-            Thread.Sleep(11000);
-            Console.WriteLine("点外卖（11s）DoTakeOut()...");        
+            return await Task.Run(() =>
+            {
+                Thread.Sleep(3000);
+                return "点外卖3s";
+            });
         }
-
-        async static Task<int> DoTakeOutAsync()
+        static async Task<string> Wash2Async()
         {
-            await Task.Delay(1);
-            Thread.Sleep(11000);
-            Console.WriteLine("点外卖（11s）DoTakeOut()...");
-            return 0;
+            return await Task.Run(()=> {
+                Thread.Sleep(3000);
+                return "洗衣服3s";
+            });
         }
-
-        static void WathcTv()
+        static async Task<string> WathcTv2Async()
         {
-            Thread.Sleep(6000);
-            Console.WriteLine("看视频（6s）WathcTv()...");
+            return await Task.Run(() =>
+            {
+                Thread.Sleep(9000);
+                return "看视频9s";
+            });
         }
-        async static Task<int> WathcTvAsync()
-        {
-            await Task.Delay(1);
-            Thread.Sleep(6000);
-            Console.WriteLine("看视频（6s）WathcTv()...");
-            return 0;
-        }
-
-        static void Wash()
-        {
-            Thread.Sleep(14000);
-            Console.WriteLine("洗衣服 (14s) Wash()...");
-        }
-
-        async static Task<int> WashAsync()
-        {
-            await Task.Delay(1);    
-            Thread.Sleep(14000);
-            Console.WriteLine("洗衣服 (14s) Wash()...");
-            return 0;
-        }
-
-        public async Task<string> GetHtmlAsync()
+        public Task<string> GetHtmlAsync()
         {
             using (var client = new HttpClient())
             {
-                return await client.GetStringAsync("http://www.baidu.com");
+                return client.GetStringAsync("http://www.baidu.com");
             }
         }
     }

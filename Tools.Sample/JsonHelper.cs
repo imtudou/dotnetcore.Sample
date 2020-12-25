@@ -8,9 +8,7 @@ namespace Tools.Sample
     {
         public static bool IsJson(this string str) 
         {
-            if (string.IsNullOrWhiteSpace(str)) return false;
-
-            return true;        
+            return string.IsNullOrWhiteSpace(str);
         }
         public static string ToDateTimeStr(this DateTime dateTime)
         {
