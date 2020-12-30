@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AsyncAndAwait.Sample
+namespace ConsoleApp
 {
 
     /*
@@ -15,7 +15,7 @@ namespace AsyncAndAwait.Sample
      */
     class Program
     {
-        static async void Main(string[] args)
+        static void Main(string[] args)
         {
             //同步单线程执行
             //Method1();//00:00:15.04s
@@ -30,7 +30,13 @@ namespace AsyncAndAwait.Sample
              */
             //Method1Async();//00:00:21.17s
 
-            Method2Async();//00:00:15.20s
+            //Method2Async();//00:00:15.20s
+
+           
+            DoSomething3();
+            DoSomething4();
+            GetHtmlAsync();
+            Console.WriteLine("主线程{0}", Thread.GetCurrentProcessorId());
 
 
             Console.ReadKey();
@@ -174,7 +180,8 @@ namespace AsyncAndAwait.Sample
         }
         static async Task<string> Wash2Async()
         {
-            return await Task.Run(()=> {
+            return await Task.Run(() =>
+            {
                 Thread.Sleep(3000);
                 return "洗衣服3s";
             });
@@ -187,12 +194,37 @@ namespace AsyncAndAwait.Sample
                 return "看视频9s";
             });
         }
-        public Task<string> GetHtmlAsync()
+        static Task<string> GetHtmlAsync()
         {
+            Task<string> str = null;
             using (var client = new HttpClient())
             {
-                return client.GetStringAsync("http://www.baidu.com");
+                str = client.GetStringAsync("http://www.imtudou.cn");
             }
+            Console.WriteLine($"{str}");
+            return str;
+        }
+
+
+        static Task<string> DoSomething3()
+        {
+            return Task.Run<string>(() =>
+            {
+                Thread.Sleep(5000);
+                Console.WriteLine("子线程{0}：DoSomething3", Thread.GetCurrentProcessorId());
+                return "DoSomething3";
+
+            });
+        }
+
+        static async Task<string> DoSomething4()
+        {
+            return await Task.Run<string>(() =>
+            {
+                Thread.Sleep(3000);
+                Console.WriteLine("子线程{0}：DoSomething4", Thread.GetCurrentProcessorId());
+                return "DoSomething4";
+            });
         }
     }
 }
