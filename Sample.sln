@@ -57,9 +57,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task_Await_Async", "Task_Await_Async", "{AFB95170-B7B0-4695-B8CD-90857EE1034B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "Task_Await_Async\ConsoleApp\ConsoleApp.csproj", "{0204B06C-5A4E-4125-BCF5-391E4BB29036}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "Task_Await_Async\ConsoleApp\ConsoleApp.csproj", "{0204B06C-5A4E-4125-BCF5-391E4BB29036}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_1.ConsoleAppThread", "Task_Await_Async\1.ConsoleApp.Thread\_1.ConsoleAppThread.csproj", "{1251822B-334B-4628-B172-47E19CC138EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_1.ConsoleAppThread", "Task_Await_Async\1.ConsoleApp.Thread\_1.ConsoleAppThread.csproj", "{1251822B-334B-4628-B172-47E19CC138EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gRPC.Sample", "gRPC.Sample", "{33DC79BA-C013-4DBE-9267-8CE00651058C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcGreeter", "gRPC.Sample\GrpcGreeter\GrpcGreeter.csproj", "{0D42951B-276F-48ED-8DA1-53A91A7F6873}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RedisHelper", "RedisHelper", "{E312C1AC-3D74-4B45-814F-4BF9694FBC7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisHelper.Sample", "RedisHelper\RedisHelper.Sample\RedisHelper.Sample.csproj", "{E2E7983C-09D8-41E7-B204-0F529CE3001D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +143,14 @@ Global
 		{1251822B-334B-4628-B172-47E19CC138EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1251822B-334B-4628-B172-47E19CC138EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1251822B-334B-4628-B172-47E19CC138EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D42951B-276F-48ED-8DA1-53A91A7F6873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D42951B-276F-48ED-8DA1-53A91A7F6873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D42951B-276F-48ED-8DA1-53A91A7F6873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D42951B-276F-48ED-8DA1-53A91A7F6873}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2E7983C-09D8-41E7-B204-0F529CE3001D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2E7983C-09D8-41E7-B204-0F529CE3001D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2E7983C-09D8-41E7-B204-0F529CE3001D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2E7983C-09D8-41E7-B204-0F529CE3001D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +171,8 @@ Global
 		{00D60892-FF38-410C-81F2-0F4DA561EAE8} = {F54B05EB-A5D6-4DA1-8A8B-F20D9EEC5E5D}
 		{0204B06C-5A4E-4125-BCF5-391E4BB29036} = {AFB95170-B7B0-4695-B8CD-90857EE1034B}
 		{1251822B-334B-4628-B172-47E19CC138EE} = {AFB95170-B7B0-4695-B8CD-90857EE1034B}
+		{0D42951B-276F-48ED-8DA1-53A91A7F6873} = {33DC79BA-C013-4DBE-9267-8CE00651058C}
+		{E2E7983C-09D8-41E7-B204-0F529CE3001D} = {E312C1AC-3D74-4B45-814F-4BF9694FBC7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {336C3813-A483-475F-A052-B6EE7B556D38}

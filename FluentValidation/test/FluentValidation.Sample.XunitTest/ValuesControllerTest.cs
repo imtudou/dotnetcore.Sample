@@ -39,27 +39,23 @@ namespace FluentValidation.Sample.XunitTest
         [Fact]
         public void Get_Get_Value_Error()
         {
-            using (HttpClient client = new HttpClient())
+            using HttpClient client = new HttpClient();
+            var person = new Person
             {
+                Age = 18,
+                Email = "xxxxqq.com",
+                Name = "xxx",
+            };
+            var url = "http://localhost:8082/api/values";
+            var data = new StringContent(JsonSerializer.Serialize(person), Encoding.UTF8, "application/json");
+            var result = client.PostAsync(url, data).Result;
 
-                var person = new Person
-                {
-                    Age = 18,
-                    Email = "xxxxqq.com",
-                    Name = "xxx",
-                };
-                var url = "http://localhost:8082/api/values";
-                var data = new StringContent(JsonSerializer.Serialize(person), Encoding.UTF8, "application/json");
-                var result = client.PostAsync(url, data).Result;
-
-                Assert.NotNull(result);
-                Assert.IsType<HttpResponseMessage>(result);
-                Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
-                var content = result.Content.ReadAsStringAsync().Result;
-                Assert.NotNull(content);
-                Assert.IsType<Person>(JsonSerializer.Deserialize<Person>(content));
-
-            }
+            Assert.NotNull(result);
+            Assert.IsType<HttpResponseMessage>(result);
+            Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+            var content = result.Content.ReadAsStringAsync().Result;
+            Assert.NotNull(content);
+            Assert.IsType<Person>(JsonSerializer.Deserialize<Person>(content));
 
         }
     }
