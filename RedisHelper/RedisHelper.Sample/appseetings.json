@@ -3,8 +3,8 @@
   "RedisDBNumber": 0,
   "ConnectionStrings": {
     "SqlServerConnectionString": "127.0.0.1:6379,allowadmin=true",
-    "RedisConnectionString": "",
-    "MongoConnectionString": ""
+    "RedisConnectionString": "127.0.0.1:6379,allowadmin=true"
   }
+  
 
 }
