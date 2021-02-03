@@ -15,7 +15,7 @@ namespace RedisHelper.Sample
 
         private static readonly IConfiguration _configuration;
         private static readonly object _lock = new object();
-        private static ConnectionMultiplexer _instance;
+        private static ConnectionMultiplexer _conn;
 
         public static string SysCustomKey;
         public static string RedisConnectionString;
@@ -46,17 +46,17 @@ namespace RedisHelper.Sample
         public static ConnectionMultiplexer Instanse
         {
             get {
-                if (_instance == null)
+                if (_conn == null)
                 {
                     lock (_lock)
                     {
-                        if (_instance == null || _instance.IsConnected)
+                        if (_conn == null || _conn.IsConnected)
                         {
-                            _instance = GetConnectionMultiplexer();
+                            _conn = GetConnectionMultiplexer();
                         }
                     }        
                 }
-                return _instance;          
+                return _conn;          
             }
         }
 
