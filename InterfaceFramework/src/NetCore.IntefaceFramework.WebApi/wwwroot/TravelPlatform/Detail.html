@@ -1,0 +1,499 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>携程数据配置</title>
+</head>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+
+<!--css-->
+<link href="./css/dashboard.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/bootstrap-switch-3.3.4-css/bootstrap3/bootstrap-switch.css">
+<link rel="stylesheet" href="./lib/bootstrap-table/bootstrap-table.min.css">
+
+
+
+<!--js-->
+<script src="js/vendors/jquery-3.2.1.min.js"></script>
+<!-- <script src="js/bootstrap.js" ></script> -->
+<script src="js/vendors/bootstrap.bundle.min.js"></script>
+<script src="js/bootstrap-switch-3.3.4-js/bootstrap-switch.js"></script>
+<script src="./lib/bootstrap-table/bootstrap-table.min.js"></script>
+
+
+<body>
+	<div class="page">
+		<div class="page-main">
+			<div class="my-3 my-md-5">
+				<div class="container">
+					<div class="page-header">
+						<h1 class="page-title" id="title">
+							携程主数据配置
+						</h1>
+					</div>
+
+					<!--搜索框及按钮-->
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="input-group">
+								<label class="lable-text">表名：</label>
+								<select name="beast" id="select-beast" class="form-control custom-select">
+									<option value="1">XG_V_Travel</option>
+									<option value="4">Bud_V_XG</option>
+									<option value="3">Req_TravelDetail_JT</option>
+								</select>
+							</div>
+						</div>
+						<!-- <button type="button" class="btn btn-primary" data-toggle="modal"
+								onclick="addDilalog()">新增</button> -->
+					</div>
+					<!---->
+					<!-- <div class="modal-footer">
+						<div>
+								<input type="text" class="form-control" id="recipient-name" value="" placeholder="请输入">
+								<input type="text" class="form-control" id="recipient-name" value="" placeholder="请输入">
+						</div>
+
+
+						<button type="button" class="btn btn-primary">保存</button>
+						<button type="button" class="btn btn-primary">检查</button>
+						 <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button> 
+					</div> -->
+
+					<div class="row" style="margin-top: 20px">
+						<div class="col-lg-5">
+							<div class="input-group">
+								<label class="lable-text">共享sql表名：</label>
+								<input type="text" class="form-control" id="sqltableCode">
+							</div><!-- /input-group -->
+						</div><!-- /.col-lg-6 -->
+						<div class="col-lg-5">
+							<div class="input-group">
+								<label>共享表单名称：</label>
+								<input type="text" class="form-control" id="sqltableName">
+
+							</div><!-- /input-group -->
+						</div><!-- /.col-lg-6 -->
+						<div class="col-lg-2 col-sm-2 col-md-2">
+							<button type="button" class="btn btn-primary" onclick="ListSave()">保存</button>
+							<button type="button" class="btn btn-primary">检查</button>
+
+						</div>
+
+					</div><!-- /.row -->
+
+
+					<!--表格-->
+					<div style="margin-top: 20px">
+						<div class="d-flex row">
+							<label for="recipient-name" class="col-xs-10 col-sm-10 col-md-11">字段信息:</label>
+							<a class="col-xs-2 col-md-1" href="#" onclick="addTableRow()">
+								<img src="./images/plus.svg" style="height: 13px" class="img-responsive" alt="添加">
+							</a>
+						</div>
+
+						<table id="table"></table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+</body>
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------>
+<!--模板部分代码-->
+
+<!--弹出窗-->
+<!--
+<div class="modal fade  bs-example-modal-lg" id="mainDataDialog" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content" style="width: 130%;">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel">主数据</h4>
+				<span class="close" data-dismiss="modal" aria-label="Close"></button>
+
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="recipient-name" class="control-label">共享sql表名:</label>
+						<input type="text" class="form-control" id="recipient-name" value="Sys_user">
+					</div>
+					<div class="form-group">
+						<label for="recipient-name" class="control-label">共享表单名称:</label>
+						<input type="text" class="form-control" id="recipient-name" value="人员档案">
+					</div>
+					<div class="form-group">
+						<label for="recipient-name" class="control-label">字段信息:</label>
+						<table class="table table-bordered table-hover table-striped">
+							<thead>
+								<tr>
+									<th>共享取值字段</th>
+									<th>共享字段别名</th>
+									<th>共享字段描述</th>
+									<th>共享字段类型</th>
+									<th>携程sql字段</th>
+									<th>携程字段描述</th>
+									<th>字段类型</th>
+									<th>是否必填</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>BaseCode</td>
+									<td>BaseCode</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>Code</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>是</td>
+								</tr>
+
+								<tr>
+									<td>BaseCode</td>
+									<td>BaseCode</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>Code</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>是</td>
+								</tr>
+
+								<tr>
+									<td>BaseCode</td>
+									<td>BaseCode</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>Code</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>是</td>
+								</tr>
+
+								<tr>
+									<td>BaseCode</td>
+									<td>BaseCode</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>Code</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>是</td>
+								</tr>
+
+								<tr>
+									<td>BaseCode</td>
+									<td>BaseCode</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>Code</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>是</td>
+								</tr>
+
+								<tr>
+									<td>BaseCode</td>
+									<td>BaseCode</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>Code</td>
+									<td>编码</td>
+									<td>varchar(20)</td>
+									<td>是</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary">保存</button>
+				<button type="button" class="btn btn-primary">检查</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+-->
+
+
+<!--表格按钮组 toolbar-->
+<!-- <div id="toolbar" class="toolbar">
+	<button type="button" class="btn btn-primary">添加</button>
+	<button type="button" class="btn btn-primary">编辑</button>
+		<button type="button" class="btn btn-primary">删除</button>
+</div> -->
+
+
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------>
+
+
+<script>
+	debugger
+
+
+	//弹出窗
+	//function addDilalog() {
+	//	$('#mainDataDialog').modal('toggle');
+	//}
+
+
+	window.onload = function () {
+        debugger
+        //设置标题
+
+        //GetUrlParams.
+        //初始化表格
+		InitTable();
+
+
+	}
+	var InitTable = function () {
+		debugger
+		$('#table').bootstrapTable({
+			editable: true,//开启编辑模式
+			clickToSelect: true,
+			sortOrder: "asc", //排序方式
+			// height: tableHeight(), // 动态配置表格高度
+			// pageNumber: 1, //初始化加载第一页，默认第一页
+			// pagination: true, //分页
+			// pageSize: 5, //每页的记录行数（*）
+			// minimumCountColumns: 2, //最少允许的列数
+			cardView: false, //是否显示详细视图
+			showExport: false, //是否显示导出
+			cache: false,
+			exportDataType: "basic", //basic', 'all', 'selected'.
+			align: 'center',
+			// toolbar: "#toolbar", //设置自定义工具栏容器ID，也可以是容器样式类名.toolbar
+			checkbox: true,
+			// showRefresh:true,//显示刷新按钮
+			columns: [{
+				field: '共享取值字段',
+				title: '共享取值字段',
+				width: 150,
+				formatter: function (value, row, index) {
+					return '<input type="text" class="form-control" value="' + value + '">';
+				}
+			}, {
+				field: '共享字段别名',
+				title: '共享字段别名',
+				width: 150,
+				formatter: function (value, row, index) {
+					return '<input type="text" class="form-control" value="' + value + '">';
+				}
+			}, {
+				field: '共享字段描述',
+				title: '共享字段描述',
+				width: 150,
+				formatter: function (value, row, index) {
+					return '<input type="text" class="form-control" value="' + value + '">';
+				}
+			}, {
+				field: '共享字段类型',
+				title: '共享字段类型',
+				width: 150,
+				formatter: function (value, row, index) {
+					return '<input type="text" class="form-control" value="' + value + '">';
+				}
+			}, {
+				field: '携程sql字段',
+				title: '携程sql字段',
+				width: 150,
+				formatter: function (value, row, index) {
+					return '<input type="text" class="form-control" value="' + value + '">';
+				}
+			}, {
+				field: '携程字段描述',
+				title: '携程字段描述',
+				width: 150,
+				formatter: function (value, row, index) {
+					return '<input type="text" class="form-control" value="' + value + '">';
+				}
+			}, {
+				field: '携程字段类型',
+				title: '携程字段类型',
+				width: 150,
+				formatter: function (value, row, index) {
+					return '<input type="text" class="form-control" value="' + value + '">';
+				}
+			}, {
+				field: '是否必填',
+				title: '是否必填',
+				width: 150,
+				formatter: function (value, row, index) {
+					return '<input type="text" class="form-control" value="' + value + '">';
+				}
+			}
+				, {
+				field: '',
+				title: '操作',
+				width: 150,
+				formatter: function (value, row, index) {
+					return   '<button class="btn btn-primary btn-sm" onclick="delTableRow(\'' + row.id + '\')">删除</button>';// '<a href="#" onclick="delTableRow(\''+row+'\')>删除</a>';
+				}
+			}
+			]
+
+		});
+		// $.ajax({
+		// 	url: './lib/data.json',
+		// 	data: '',
+		// 	dataType: 'json',
+		// 	success: function (ret) {
+		// 		$("#table").bootstrapTable('load', ret);   //实例化完成后渲染表格数据
+
+		// 	}
+		// });
+
+		var arrList = [
+			{
+				"id":"1",
+				"共享取值字段": "LeaveAddress",
+				"共享字段别名": "LeaveAddress",
+				"共享字段描述": "出发地",
+				"共享字段类型": "Varchar(20)",
+				"携程sql字段": "LeaveAddress",
+				"携程字段描述": "出发地",
+				"携程字段类型": "Varchar(20)",
+				"是否必填": "是"
+			},
+			{
+				"id":"2",
+				"共享取值字段": "ArriveAddress",
+				"共享字段别名": "ArriveAddress",
+				"共享字段描述": "目的地",
+				"共享字段类型": "Varchar(20)",
+				"携程sql字段": "LeaveAddress",
+				"携程字段描述": "目的地",
+				"携程字段类型": "Varchar(20)",
+				"是否必填": "是"
+			}, {
+				"id":"3",
+				"共享取值字段": "LeaveAddress",
+				"共享字段别名": "LeaveAddress",
+				"共享字段描述": "出发日期",
+				"共享字段类型": "Varchar(20)",
+				"携程sql字段": "LeaveAddress",
+				"携程字段描述": "出发日期",
+				"携程字段类型": "Varchar(20)",
+				"是否必填": "是"
+			}, {
+				"id":"4",
+				"共享取值字段": "LeaveAddress",
+				"共享字段别名": "LeaveAddress",
+				"共享字段描述": "回程日期",
+				"共享字段类型": "Varchar(20)",
+				"携程sql字段": "LeaveAddress",
+				"携程字段描述": "回程日期",
+				"携程字段类型": "Varchar(20)",
+				"是否必填": "是"
+			}, {
+				"id":"5",
+				"共享取值字段": "LeaveAddress",
+				"共享字段别名": "LeaveAddress",
+				"共享字段描述": "出差人",
+				"共享字段类型": "Varchar(20)",
+				"携程sql字段": "LeaveAddress",
+				"携程字段描述": "出差人",
+				"携程字段类型": "Varchar(20)",
+				"是否必填": "是"
+			}, {
+				"id":"6",
+				"共享取值字段": "LeaveAddress",
+				"共享字段别名": "LeaveAddress",
+				"共享字段描述": "国内外",
+				"共享字段类型": "Varchar(20)",
+				"携程sql字段": "LeaveAddress",
+				"携程字段描述": "国内外",
+				"携程字段类型": "Varchar(20)",
+				"是否必填": "是"
+			}
+		]
+
+		$("#table").bootstrapTable('load', arrList);   //实例化完成后渲染表格数据
+
+	}
+
+	//保存
+	function ListSave() {debugger
+		var sqltableCode = $("#sqltableCode").val();
+		var sqltableName = $("#sqltableName").val();
+        var allTableData = $("#table").bootstrapTable('getData');
+
+
+
+
+	}
+
+
+	//添加表格行
+    function addTableRow() {
+        debugger
+       
+		var data = {
+			"id":Math.random().toString(),
+			"共享取值字段": "",
+			"共享字段别名": "",
+			"共享字段描述": "",
+			"共享字段类型": "",
+			"携程sql字段": "",
+			"携程字段描述": "",
+			"携程字段类型": "",
+			"是否必填": ""
+        }
+
+        $('#table').bootstrapTable('append', data);
+             
+	}
+
+	//删除表格行
+	function delTableRow(id) {
+ 
+		var ids = [];//定义一个数组
+		ids.push(id);//将要删除的id存入数组
+		$("#table").bootstrapTable('remove', { field: 'id', values: ids });//field:根据field的值来判断要删除的行 values：删除行所对应的值
+    }
+
+
+
+
+
+
+
+    function GetUrlParams() {
+        var obg = {}, a = '';
+        (a = window.location.search.substr(1)) || (a = window.location.hash.split('?')[1])
+        a.split(/&/g).forEach(function (item) {
+            obg[(item = item.split('='))[0]] = item[1];
+        })
+        return obg
+    }
+    
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,355 @@
+﻿<!doctype html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Language" content="en" />
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="theme-color" content="#4188c9">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+  <title>商旅平台</title>
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+
+  <!--css-->
+  <link href="./css/dashboard.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/bootstrap-switch-3.3.4-css/bootstrap3/bootstrap-switch.css">
+
+
+  <!--js-->
+  <script src="js/vendors/jquery-3.2.1.min.js"></script>
+  <script src="js/vendors/bootstrap.bundle.min.js"></script>
+  <script src="js/bootstrap-switch-3.3.4-js/bootstrap-switch.js"></script>
+
+</head>
+
+<body class="">
+  <div class="page">
+    <div class="page-main">
+      <div class="my-3 my-md-5">
+        <div class="container">
+          <div class="page-header">
+            <h1 class="page-title" id="title">
+              携程配置
+            </h1>
+          </div>
+          <div class="row row-cards">
+
+            <!--主数据-->
+            <div class="col-6 col-sm-4 col-lg-2">
+              <div class="card">
+                <div class="card-body p-3 text-center">
+                  <img src="./images/zhushuju.png" class="img-responsive">
+                  <div class="text-muted" style="margin-top: 5%">主数据</div>
+                  <label class="custom-switch m-2 ">
+                    <input type="checkbox" value="1" class="custom-switch-input" checked="">
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#" onclick="LoadDetail('Ctrip.html','zhushuju','')"
+                      data-toggle="modal">数据配置</a></div>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#">配置说明</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <img src="./images/next_new.png" class="img-responsive" style="text-align: center;margin-top: 70%;">
+            </div>
+
+            <!--行程信息推送-->
+            <div class="col-6 col-sm-4 col-lg-2">
+              <div class="card">
+                <div class="card-body p-3 text-center">
+                  <img src="./images/travelinfo.png" class="img-responsive">
+                  <div class="text-muted" style="margin-top: 5%">行程信息推送</div>
+                  <label class="custom-switch m-2 ">
+                    <input type="checkbox" value="1" class="custom-switch-input" checked="">
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#" onclick="LoadDetail('','','')"
+                      data-toggle="modal">数据配置</a></div>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#">配置说明</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <img src="./images/next_new.png" class="img-responsive" style="text-align: center;margin-top: 70%;">
+            </div>
+
+            <!--预算请求-->
+            <div class="col-6 col-sm-4 col-lg-2">
+              <div class="card">
+                <div class="card-body p-3 text-center">
+                  <img src="./images/BudCheck.png" class="img-responsive">
+                  <div class="text-muted" style="margin-top: 5%">预算请求</div>
+                  <label class="custom-switch m-2 ">
+                    <input type="checkbox" value="1" class="custom-switch-input" checked="">
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#" onclick="LoadDetail('','','')"
+                      data-toggle="modal">数据配置</a></div>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#">配置说明</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <img src="./images/next_new.png" class="img-responsive" style="text-align: center;margin-top: 70%;">
+            </div>
+
+            <!--订单取回-->
+            <div class="col-6 col-sm-4 col-lg-2">
+              <div class="card">
+                <div class="card-body p-3 text-center">
+                  <img src="./images/Order.png" class="img-responsive">
+                  <div class="text-muted" style="margin-top: 5%">订单取回</div>
+                  <label class="custom-switch m-2 ">
+                    <input type="checkbox" value="1" class="custom-switch-input" checked="">
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#" onclick="LoadDetail('','','')"
+                      data-toggle="modal">数据配置</a></div>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#">配置说明</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <img src="./images/next_new.png" class="img-responsive" style="text-align: center;margin-top: 70%;">
+            </div>
+
+            <!--预算执行-->
+            <div class="col-6 col-sm-4 col-lg-2">
+              <div class="card">
+                <div class="card-body p-3 text-center">
+                  <img src="./images/Bud.png" class="img-responsive">
+                  <div class="text-muted" style="margin-top: 5%">预算执行</div>
+                  <label class="custom-switch m-2 ">
+                    <input type="checkbox" value="1" class="custom-switch-input" checked="">
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#" onclick="LoadDetail('','','')"
+                      data-toggle="modal">数据配置</a></div>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#">配置说明</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <img src="./images/next_new.png" class="img-responsive" style="text-align: center;margin-top: 70%;">
+            </div>
+
+            <!--结算信息-->
+            <div class="col-6 col-sm-4 col-lg-2">
+              <div class="card">
+                <div class="card-body p-3 text-center">
+                  <img src="./images/settlementinfo.png" class="img-responsive">
+                  <div class="text-muted" style="margin-top: 5%">结算信息</div>
+                  <label class="custom-switch m-2 ">
+                    <input type="checkbox" value="1" class="custom-switch-input" checked="">
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                  <!-- <div class="switch" data-on="info" data-off="success" style="margin-top: 5%">
+                          <input type="checkbox" name="my-checkbox" checked  >
+                      </div> -->
+                  <div class="text-muted" style="margin-top: 5%"><a href="#" onclick="LoadDetail('','','')"
+                      data-toggle="modal">数据配置</a></div>
+                  <div class="text-muted" style="margin-top: 5%"><a href="#">配置说明</a></div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------>
+<!--模板部分代码-->
+
+<!--弹出窗-->
+<div class="modal fade  bs-example-modal-lg" id="mainDataDialog" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="width: 130%;">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">主数据</h4>
+        <span class="close" data-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">共享sql表名:</label>
+            <input type="text" class="form-control" id="recipient-name" value="Sys_user">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">共享表单名称:</label>
+            <input type="text" class="form-control" id="recipient-name" value="人员档案">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">字段信息:</label>
+            <table class="table table-bordered table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>共享取值字段</th>
+                  <th>共享字段别名</th>
+                  <th>共享字段描述</th>
+                  <th>共享字段类型</th>
+                  <th>携程sql字段</th>
+                  <th>携程字段描述</th>
+                  <th>字段类型</th>
+                  <th>是否必填</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>BaseCode</td>
+                  <td>BaseCode</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>Code</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>是</td>
+                </tr>
+
+                <tr>
+                  <td>BaseCode</td>
+                  <td>BaseCode</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>Code</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>是</td>
+                </tr>
+
+                <tr>
+                  <td>BaseCode</td>
+                  <td>BaseCode</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>Code</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>是</td>
+                </tr>
+
+                <tr>
+                  <td>BaseCode</td>
+                  <td>BaseCode</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>Code</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>是</td>
+                </tr>
+
+                <tr>
+                  <td>BaseCode</td>
+                  <td>BaseCode</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>Code</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>是</td>
+                </tr>
+
+                <tr>
+                  <td>BaseCode</td>
+                  <td>BaseCode</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>Code</td>
+                  <td>编码</td>
+                  <td>varchar(20)</td>
+                  <td>是</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">保存</button>
+        <button type="button" class="btn btn-primary">检查</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------------------------------------------------------------------------------------------------------------------------------------>
+
+
+<!---->
+<script>
+  debugger
+
+  //设置标题
+  document.getElementById('title').innerText = window.parent.name;
+
+  //页面元素加载
+  document.ready = function () {
+
+
+
+
+
+
+  }
+
+  //
+  //功能：加载主数据弹出框
+  //参数：module(标识是那个模块：携程，美亚，飞猪)
+  //      type:模块中的类型（主数据，行程信息推送，预算请求....）
+  //      detail:类别中的配置明细(数据配置，配置说明)
+  function LoadDetail(modules, type, detail) {
+    debugger
+
+    switch (modules) {
+      case 'Ctrip.html':
+            window, location.href = "Detail.html?modules=ctrip&type=zhushuju";  
+        break;
+        case 'MeiYa.html':
+        $('#mainDataDialog').modal('toggle');
+        window,location.href = modules;
+ 
+       break;
+
+      default:
+        break;
+    }
+
+
+  }
+
+  function GetDialogTemplate() {
+
+
+  }
+
+
+
+
+
+</script>
+
+</html>

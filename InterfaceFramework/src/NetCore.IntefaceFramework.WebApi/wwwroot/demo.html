@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/JsEncryptHelper.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+<body>
+    <form id="form1>
+        <div>
+            <label>Public Key</label><br />
+            <label for="input">Text to encrypt:</label><br />
+            name:<input id="username" name="username" type="text"></input><br />
+            password:<input id="passwd" name="passwd" type="password"></input><br />
+            <input id="testme" type="button" value="submit" /><br />
+        </div>
+    </form>
+</body>
+
+<script>
+    $(function () {
+
+        $('#testme').click(function () {
+            debugger
+            console.log("开始发送数据请求");
+            var data = {};
+            data.username = $('#username').val();
+            data.passwd = $('#passwd').val();
+
+            console.log("加密前数据:", JSON.stringify(data.username));
+            var result = $.encryptRequest({
+                data: data
+            });
+            console.log("加密后数据:", JSON.stringify(result));
+            var cc = JSON.stringify(result);
+            $.ajax({
+                url: 'https://localhost:5001/api/Test/GetData',
+                dataType: "text",
+                contentType: 'application/json',
+                type:'post',
+                data: cc,
+                success: function (res)
+                {
+                    alert(res);
+                   console.log("服务端解密成功:", JSON.stringify(res));
+
+                }
+            })
+
+        });
+    });
+</script>
