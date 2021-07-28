@@ -15,6 +15,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\RedisHelper.Sample\RedisHelper.Sample.csproj" />
+    <ProjectReference Include="..\RedisTestDto\RedisTestDto.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appseetings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
