@@ -56,9 +56,38 @@ namespace RedisHelper.XUnitTestProject1
 
             };
             var serializeData = JsonConvert.SerializeObject(userInfo);
-            var result = redisHelper.StringSet("String", serializeData, new TimeSpan(0, 1, 0));
+            var result = redisHelper.StringSet("String", serializeData);
             Assert.True(result);
             var result1 = redisHelper.StringGet<UserInfo_StringSetDto>("String");
+        }
+
+        [Fact]
+        public void Hash()
+        {
+            //无序字典
+            string guid = "Hash";
+            var userInfo = new UserInfo_StringSetDto
+            {
+                Id = "1",
+                Name = "张小三",
+                Phone = "13500000001",
+                Address = new Address
+                {
+                    Province = "上海",
+                    City = "",
+                    Town = "",
+                    PostalCode = ""
+                }
+            };
+
+            redisHelper.HashSet<string>(guid, nameof(userInfo.Id), "1");
+            redisHelper.HashSet<string>(guid, nameof(userInfo.Id), "1");
+            redisHelper.HashSet<string>(guid, nameof(userInfo.Id), "1");
+            redisHelper.HashSet<string>(guid, nameof(userInfo.Name), userInfo.Name);
+            redisHelper.HashSet<string>(guid, nameof(userInfo.Phone), userInfo.Phone);
+            redisHelper.HashSet<Address>(guid, nameof(userInfo.Address), userInfo.Address);
+
+            var name = redisHelper.HashGet<string>(guid, nameof(userInfo.Name));
         }
 
         [Fact]
@@ -111,13 +140,11 @@ namespace RedisHelper.XUnitTestProject1
         }
 
         [Fact]
-        public void Hash()
+        public void Set()
         {
-            //无序字典
-            string guid = "Hash";
             var userInfo = new UserInfo_StringSetDto
             {
-                Id = "1",
+                Id = Guid.NewGuid().ToString(),
                 Name = "张小三",
                 Phone = "13500000001",
                 Address = new Address
@@ -127,20 +154,20 @@ namespace RedisHelper.XUnitTestProject1
                     Town = "",
                     PostalCode = ""
                 }
+
             };
 
-            redisHelper.HashSet<string>(guid, nameof(userInfo.Id), "1");
-            redisHelper.HashSet<string>(guid, nameof(userInfo.Id), "1");
-            redisHelper.HashSet<string>(guid, nameof(userInfo.Id), "1");
-            redisHelper.HashSet<string>(guid, nameof(userInfo.Name), userInfo.Name);
-            redisHelper.HashSet<string>(guid, nameof(userInfo.Phone), userInfo.Phone);
-            redisHelper.HashSet<Address>(guid, nameof(userInfo.Address), userInfo.Address);
+            var serializeData = JsonConvert.SerializeObject(userInfo);
+            Database.SetAdd("Set", serializeData);
+            for (int i = 0; i < Database.SetLength("Set"); i++)
+            {
+                var cc = Database.SetPop("Set");
+            }
 
-            var name = redisHelper.HashGet<string>(guid, nameof(userInfo.Name));
         }
 
         [Fact]
-        public void Zset()
+        public void SortedSet()
         {
             //有序列表
             /*
@@ -148,7 +175,7 @@ namespace RedisHelper.XUnitTestProject1
                     value 的唯一性，另一方面它可以给每个 value 赋予一个 score，代表这个 value 的排序权
                     重。它的内部实现用的是一种叫着「跳跃列表」的数据结构。
              */
-            string guid = "Zset";
+            string guid = "SortedSet";
             var userInfo1 = new UserInfo_StringSetDto
             {
                 Id = "1",
@@ -194,9 +221,10 @@ namespace RedisHelper.XUnitTestProject1
             redisHelper.SortedSetAdd<UserInfo_StringSetDto>(guid, userInfo2, 2);
             redisHelper.SortedSetAdd<UserInfo_StringSetDto>(guid, userInfo3, 3);
 
+            var sortedSetResult = Database.SortedSetRangeByScore(guid);
+
 
         }
-
 
         [Fact]
         public void RedisLock()
@@ -208,10 +236,10 @@ namespace RedisHelper.XUnitTestProject1
             t2.Start();
         }
 
-
         [Fact]
         public void PushlisherSubscriber()
         {
+            // 注：在多个实例中需要先运行订阅的代码在运行发布的代码
             var channel = "redisPubSubMsg";
             var msg = $"{DateTime.Now.ToString()}";
 
@@ -257,15 +285,19 @@ namespace RedisHelper.XUnitTestProject1
                 var cc =  Database.StringGet("RedisLock");
             }
         }
-        
 
+        [Fact]
+        public void ConvertBase64()
+        {
+            string a = "abc";
+            byte[] bt = Encoding.Default.GetBytes(a);
+            var encrypt = Convert.ToBase64String(bt);
+            testOutputHelper.WriteLine("encryptStr:"+ encrypt);
 
+            var decode = Encoding.Default.GetString(Convert.FromBase64String(encrypt));
+            testOutputHelper.WriteLine("decode:" + decode);
 
-
-
-
-
-
+        }
     }
 
 }
