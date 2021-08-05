@@ -23,8 +23,8 @@ namespace RedisHelper.XUnitTestProject1
     public class StringUnitTest
     {
         RedisHelper.Sample.RedisHelper redisHelper;
-        private  readonly ConnectionMultiplexer Connection;
-        private  readonly IDatabase Database;
+        private readonly ConnectionMultiplexer Connection;
+        private readonly IDatabase Database;
         protected readonly ITestOutputHelper testOutputHelper;
         public StringUnitTest(ITestOutputHelper testOutput)
         {
@@ -38,6 +38,7 @@ namespace RedisHelper.XUnitTestProject1
          * String, list  set hash zset
          */
 
+        #region 基础数据结构
         [Fact]
         public void String()
         {
@@ -91,48 +92,46 @@ namespace RedisHelper.XUnitTestProject1
         }
 
         [Fact]
-        public void List_Quene()
+        public void ListLeftPush()
         {
-            // 队列：先进先出,右边进左边出
-            string guid = "List_Quene";
+            // 先进先出
+            string guid = "ListLeftPush";
 
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 5; i++)
             {
-                Thread.Sleep(new TimeSpan(0,0,i));
-                redisHelper.ListLeftPush(guid, DateTime.Now.ToString());
+                Thread.Sleep(new TimeSpan(0, 0, 2));
+                Database.ListLeftPush(guid, DateTime.Now.ToString());
             }
 
-            Task.Run(()=> 
+
+            var count = Database.ListLength(guid);
+            for (int i = 0; i < count; i++)
             {
-                var count = redisHelper.ListLength(guid);
-                for (int i = 0; i < count; i++)
-                {
-                    var cc = redisHelper.ListRightPop<string>(guid);
-                }            
-            });
-            
-           
+                var cc = Database.ListRightPop(guid);
+            }
+
+
+
 
         }
 
         [Fact]
-        public void List_Stack()
+        public void ListLeftPush2()
         {
-            // 栈：先进后出,右边进右边出
-            string guid = "List_Stack";
+            string guid = "ListLeftPush2";
 
             for (int i = 1; i < 10; i++)
             {
                 Thread.Sleep(new TimeSpan(0, 0, i));
-                redisHelper.ListLeftPush(guid, DateTime.Now.ToString());
+                Database.ListLeftPush(guid, DateTime.Now.ToString());
             }
 
             Task.Run(() =>
             {
-                var count = redisHelper.ListLength(guid);
+                var count = Database.ListLength(guid);
                 for (int i = 0; i < count; i++)
                 {
-                    var cc = redisHelper.ListLeftPop<string>(guid);
+                    var cc = Database.ListLeftPop(guid);
                 }
             });
 
@@ -167,7 +166,7 @@ namespace RedisHelper.XUnitTestProject1
         }
 
         [Fact]
-        public void SortedSet()
+        public void Zset()
         {
             //有序列表
             /*
@@ -225,7 +224,9 @@ namespace RedisHelper.XUnitTestProject1
 
 
         }
+        #endregion
 
+        #region 应用一：分布式锁
         [Fact]
         public void RedisLock()
         {
@@ -236,29 +237,7 @@ namespace RedisHelper.XUnitTestProject1
             t2.Start();
         }
 
-        [Fact]
-        public void PushlisherSubscriber()
-        {
-            // 注：在多个实例中需要先运行订阅的代码在运行发布的代码
-            var channel = "redisPubSubMsg";
-            var msg = $"{DateTime.Now.ToString()}";
-
-            ISubscriber sub = Connection.GetSubscriber();
-            sub.Subscribe(channel, (channel, message) =>
-            {
-                testOutputHelper.WriteLine($"订阅消息1：{(string)message}");
-            });
-            sub.Subscribe(channel, (channel, message) =>
-            {
-                testOutputHelper.WriteLine($"订阅消息2：{(string)message}");
-            });
-
-            ISubscriber pub = Connection.GetSubscriber();
-            var pubresult = pub.Publish(channel, msg);
-            testOutputHelper.WriteLine($"发布消息{msg.ToString()}");
-        }
-
-        public  void AddVal()
+        public void AddVal()
         {
             for (int i = 0; i < 50000; i++)
             {
@@ -282,9 +261,41 @@ namespace RedisHelper.XUnitTestProject1
                     }
                 }
 
-                var cc =  Database.StringGet("RedisLock");
+                var cc = Database.StringGet("RedisLock");
             }
         }
+        #endregion
+
+
+        #region 应用二：延迟队列
+        // 使用Blocking 
+        // Blocking 阻塞读 ListLeftPush/ListRightPop 
+        #endregion
+
+
+        [Fact]
+        public void PushlisherSubscriber()
+        {
+            // 注：在多个实例中需要先运行订阅的代码在运行发布的代码
+            var channel = "redisPubSubMsg";
+            var msg = $"{DateTime.Now.ToString()}";
+
+            ISubscriber sub = Connection.GetSubscriber();
+            sub.Subscribe(channel, (channel, message) =>
+            {
+                testOutputHelper.WriteLine($"订阅消息1：{(string)message}");
+            });
+            sub.Subscribe(channel, (channel, message) =>
+            {
+                testOutputHelper.WriteLine($"订阅消息2：{(string)message}");
+            });
+
+            ISubscriber pub = Connection.GetSubscriber();
+            var pubresult = pub.Publish(channel, msg);
+            testOutputHelper.WriteLine($"发布消息{msg.ToString()}");
+        }
+
+
 
         [Fact]
         public void ConvertBase64()
@@ -292,7 +303,7 @@ namespace RedisHelper.XUnitTestProject1
             string a = "abc";
             byte[] bt = Encoding.Default.GetBytes(a);
             var encrypt = Convert.ToBase64String(bt);
-            testOutputHelper.WriteLine("encryptStr:"+ encrypt);
+            testOutputHelper.WriteLine("encryptStr:" + encrypt);
 
             var decode = Encoding.Default.GetString(Convert.FromBase64String(encrypt));
             testOutputHelper.WriteLine("decode:" + decode);
