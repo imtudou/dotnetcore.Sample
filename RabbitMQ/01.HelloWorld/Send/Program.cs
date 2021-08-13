@@ -15,24 +15,27 @@ namespace Send
             var factory = new ConnectionFactory { HostName = "localhost" };
 
             //2.建立连接
-            using (var connection = factory.CreateConnection("http://localhost:15672/"))
+            using (var connection = factory.CreateConnection())
             {
                 //3.创建信道
                 using (var channel = connection.CreateModel())
                 {
-                    //4. 申明队列
-                    channel.QueueDeclare(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
+                    //4. 申明队列 (指定durable:true,告知rabbitmq对消息进行持久化)
+                    channel.QueueDeclare(queue: "hello", durable: true, exclusive: false, autoDelete: false, arguments: null);
+                    //将消息标记为持久性 - 将IBasicProperties.SetPersistent设置为true
+                    var properties = channel.CreateBasicProperties();
+                    properties.Persistent = true;
 
                     //5.构建byte消息数据包
-                    string msg = args.Length > 0 ? args[0] : $"Hello RabbitMQ! { DateTime.Now.Ticks}";
+                    string msg = $"Hello RabbitMQ! { DateTime.Now.Ticks}";
                     var body = Encoding.UTF8.GetBytes(msg);
 
                     //6.发送数据包
-                    channel.BasicPublish(exchange: "", routingKey: "hello", basicProperties: null, body: body);
+                    channel.BasicPublish(exchange: "", routingKey: "hello", basicProperties: properties, body: body);
                     Console.WriteLine(" send {0}", msg);
                 }
             }
             Console.ReadKey();
         }
-    }
+    }   
 }

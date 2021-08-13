@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Description>基于StackExchange.Redis 封装；集成位图等功能，集成队列，发布订阅功能；集成分布式锁，延迟队列功能</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
