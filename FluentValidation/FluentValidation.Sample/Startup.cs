@@ -39,7 +39,7 @@ namespace FluentValidation.Sample
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
 
-            //重写ModelState 的默认行为
+            //重写ModelState 的默认行为 // 此处在过滤器中校验Model.State 也可以
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = (context) =>
