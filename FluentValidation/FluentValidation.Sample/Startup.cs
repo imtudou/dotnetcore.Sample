@@ -1,19 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
+using FluentValidation.Sample.Filter;
+using FluentValidation.Sample.Validator;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using FluentValidation.AspNetCore;
-using FluentValidation.Sample.Validator;
-using FluentValidation.Sample.ViewModel;
+
+using System.Linq;
 using System.Net;
-using FluentValidation.Sample.Filter;
 
 namespace FluentValidation.Sample
 {
@@ -29,7 +26,12 @@ namespace FluentValidation.Sample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IValidator<Person>, PersonValidator>();
+            // example 1
+            //services.AddTransient<IValidator<Person>, PersonValidator>();
+
+            // examole 2
+            services.AddControllers().AddFluentValidation(s => s.RegisterValidatorsFromAssemblyContaining<IBaseValidator>());
+
             services.AddControllers()
                 .AddFluentValidation();
 
@@ -58,7 +60,7 @@ namespace FluentValidation.Sample
                     return new BadRequestObjectResult(result);
                 };
             });
-            
+
 
         }
 

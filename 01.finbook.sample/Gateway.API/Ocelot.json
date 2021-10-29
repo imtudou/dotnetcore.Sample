@@ -1,0 +1,103 @@
+{
+  "Routes": [
+
+    /*
+        ## User.Identity API
+           IdentityServer
+    */
+    {
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "DownstreamPathTemplate": "/connect/token",
+      "UpstreamPathTemplate": "/token",
+      "UpstreamHttpMethod": [ "Post" ]
+
+    },
+
+    /*
+        ## User.API
+           用户服务
+    */
+    {
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "DownstreamPathTemplate": "/api/user",
+      "UpstreamPathTemplate": "/user",
+      "UpstreamHttpMethod": [ "Get" ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+
+      //配置认证
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "finbook",
+        "AllowedScopes": []
+      }
+
+    },
+
+    /*
+      ## Contacts.API
+         通讯录服务
+    */
+    {
+      //获取联系人信息
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "DownstreamPathTemplate": "/api/contacts",
+      "UpstreamPathTemplate": "/contacts",
+      "UpstreamHttpMethod": [ "Get" ],
+
+      //配置认证
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "finbook",
+        "AllowedScopes": []
+      }
+    },
+    {
+      //给联系人打标签
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "DownstreamPathTemplate": "/api/contacts/tags",
+      "UpstreamPathTemplate": "/contacts/tags",
+      "UpstreamHttpMethod": [ "Put" ]
+    },
+    {
+      //好友申请(添加，通过，获取)
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "DownstreamPathTemplate": "/api/contacts/apply-request",
+      "UpstreamPathTemplate": "/contacts/apply-request",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
+    }
+
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000"
+  }
+}

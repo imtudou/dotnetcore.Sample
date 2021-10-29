@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation.Sample.ViewModel;
-using Microsoft.AspNetCore.Http;
+﻿using FluentValidation.Sample.ViewModel;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+
+using System;
 using System.Text.Json;
 
 namespace FluentValidation.Sample.Controllers
@@ -15,7 +12,7 @@ namespace FluentValidation.Sample.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public Func<UserInfoEntity,string> GenterStr = s => JsonSerializer.Serialize(s);
+        public Func<UserInfoEntity, string> GenterStr = s => JsonSerializer.Serialize(s);
 
         [HttpPost]
         public IActionResult Post([FromBody] Person person)
@@ -35,14 +32,14 @@ namespace FluentValidation.Sample.Controllers
         }
     }
 
-    public class UserInfoEntity 
+    public class UserInfoEntity
     {
-        public string UserId { get; set; } 
-        public string UserName { get; set; } 
-        public string UserEmail { get; set; } 
-        public string UserTitle { get; set; } 
-        public int UserAge  { get; set; }
-        public int UserGender  { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string UserEmail { get; set; }
+        public string UserTitle { get; set; }
+        public int UserAge { get; set; }
+        public int UserGender { get; set; }
         public string Address { get; set; }
     }
 

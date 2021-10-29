@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Net;
-using System.Threading.Tasks;
 using System.Text.Json;
 
 namespace FluentValidation.Sample.Filter
@@ -29,7 +26,7 @@ namespace FluentValidation.Sample.Filter
             var result = new
             {
                 code = HttpStatusCode.InternalServerError,
-                Msg = "InternalServer Error",
+                Msg = "自定义错误：异常",
                 Errors = context.Exception.Message
             };
 

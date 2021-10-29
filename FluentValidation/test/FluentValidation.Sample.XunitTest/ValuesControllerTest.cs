@@ -4,6 +4,7 @@ using Xunit;
 using System.Text.Json;
 using System.Text;
 using System.Net;
+using System.IO;
 
 namespace FluentValidation.Sample.XunitTest
 {
@@ -17,17 +18,23 @@ namespace FluentValidation.Sample.XunitTest
            
                 var person = new Person 
                 { 
-                    Age = 18,
+                    Age = 1,
                     Email = "xxx@qq.com",
                     Name = "xxx",
                 };
-                var url = "http://localhost:8082/api/values";
+                var url = "http://localhost:5000/api/values";
                 var data = new StringContent(JsonSerializer.Serialize(person),Encoding.UTF8,"application/json");
                 var result = client.PostAsync(url, data).Result;
+                var cc1 = person.GetHashCode();
+                var cc2 = Encoding.GetEncoding("utf-8").GetBytes(JsonSerializer.Serialize(person));
+                FileStream fs = new FileStream("test.txt",FileMode.OpenOrCreate,FileAccess.ReadWrite);
+                fs.WriteAsync(cc2).ConfigureAwait(false);
+
+
 
                 Assert.NotNull(result);
                 Assert.IsType<HttpResponseMessage>(result);
-                Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+                //Assert.Equal(HttpStatusCode.OK, result.StatusCode);
                 var content = result.Content.ReadAsStringAsync().Result;
                 Assert.NotNull(content);
                 Assert.IsType<Person>(JsonSerializer.Deserialize<Person>(content));
