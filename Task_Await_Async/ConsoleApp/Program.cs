@@ -226,5 +226,10 @@ namespace ConsoleApp
                 return "DoSomething4";
             });
         }
+
+        public static async Task HandleAsync()
+        {
+
+        }
     }
 }
