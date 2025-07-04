@@ -66,8 +66,6 @@ namespace RedisHelper.Sample
         }
         #endregion
 
-
-
         #region String
         #region 同步方法
         /// <summary>
@@ -641,7 +639,7 @@ namespace RedisHelper.Sample
 
         #endregion 异步方法
 
-        #endregion List
+        #endregion Set
 
         #region SortedSet 有序集合
 
@@ -852,8 +850,6 @@ namespace RedisHelper.Sample
         }
 
         #endregion 发布订阅
-
-
 
         #region 辅助方法
         private string AddSysCustomKey(string oldKey)

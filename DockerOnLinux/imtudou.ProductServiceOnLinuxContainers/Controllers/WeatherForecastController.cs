@@ -1,0 +1,65 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
+using Newtonsoft.Json;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace imtudou.ProductServiceOnLinuxContainers.Controllers
+{
+    [ApiController]
+    public class WeatherForecastController : ControllerBase
+    {
+        private static readonly string[] Summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
+
+        private readonly ILogger<WeatherForecastController> _logger;
+        public readonly IConfiguration _configuration;
+        private readonly HttpClient _httpClient;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger
+            , IConfiguration configuration
+            , HttpClient httpClient)
+        {
+            _logger = logger;
+            _configuration = configuration;
+            _httpClient = httpClient;
+        }
+
+
+        [HttpGet,Route("api/get")]
+        public IEnumerable<WeatherForecast> Get()
+        {
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                TenantID = _configuration.GetSection("TenantID").Value,
+                ConnStr = _configuration.GetSection("conn").Value,
+            })
+            .ToArray();
+        }
+
+        [HttpGet,Route("api/GetProduct")]
+        public string GetProduct()
+        {
+            var result = new { Description = "产品信息", Name = "苹果", Price = 9999};
+            return JsonConvert.SerializeObject(result);
+        }                   
+
+        [HttpGet, Route("api/GetProductList")]
+        public async Task<object> GetProductList()
+        {
+            var userUrl = $"{_configuration.GetSection("userserviceurl").Value}/api/GetUser";
+            var result = await _httpClient.GetStringAsync(userUrl);
+            var resultobj = new { product = Summaries, user = result };
+            return resultobj;
+        }
+    }
+}

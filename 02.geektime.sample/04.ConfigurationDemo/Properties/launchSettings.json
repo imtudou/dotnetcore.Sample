@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "4.ConfigurationDemo": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "--CommandLineKey2": "value2",
+        "CommandLineKey1": "value1"
+      }
+    }
+  }
+}

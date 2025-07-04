@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  imtudou.productserviceonlinuxcontainers:
+    image: ${DOCKER_REGISTRY-}imtudouproductserviceonlinuxcontainers
+    build:
+      context: .
+      dockerfile: DockerOnLinux/imtudou.ProductServiceOnLinuxContainers/Dockerfile
+
+  imtudou.userserviceonlinuxcontainers:
+    image: ${DOCKER_REGISTRY-}imtudouuserserviceonlinuxcontainers
+    build:
+      context: .
+      dockerfile: DockerOnLinux/imtudou.UserServiceOnLinuxContainers/Dockerfile
+

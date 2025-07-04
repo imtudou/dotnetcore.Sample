@@ -1,5 +1,5 @@
 {
-  "RedisKey": "RedisHelper.Samper",
+  "RedisKey": "RedisHelper.Samper_",
   "RedisDBNumber": 0,
   "ConnectionStrings": {
     "RedisConnectionString": "127.0.0.1:6379,allowadmin=true"

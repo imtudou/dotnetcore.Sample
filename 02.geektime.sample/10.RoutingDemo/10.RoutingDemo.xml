@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>10.RoutingDemo</name>
+    </assembly>
+    <members>
+        <member name="M:_10.RoutingDemo.Controllers.WeatherForecastController.Get">
+            <summary>
+            Get
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:_10.RoutingDemo.Controllers.WeatherForecastController.GetUserInfo(System.String)">
+            <summary>
+            GetUserInfo
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Savorboard.CAP.InMemoryMessageQueue;
+
 namespace Cap.WebAPI
 {
     public class Startup
@@ -25,6 +27,12 @@ namespace Cap.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // ÅäÖÃCAP
+            services.AddCap(s =>
+            {
+                s.UseInMemoryStorage();
+                s.UseInMemoryMessageQueue();
+            });
             services.AddControllers();
         }
 
