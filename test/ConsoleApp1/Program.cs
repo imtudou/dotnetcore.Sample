@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleApp1
@@ -8,6 +9,40 @@ namespace ConsoleApp1
     class Program
     {
         static void Main(string[] args)
+        {
+            Random random = new Random();
+        
+
+            for (int i = 0; i < 100; i++)
+            {
+                int r = random.Next(1, 30);
+                Console.WriteLine(r);
+
+            }
+            //TimeSpan timeSpan = new TimeSpan(0, 1, r);
+
+            //Timer timer = new Timer(Callback, null, timeSpan, Timeout.InfiniteTimeSpan);
+
+            //// 防止主线程退出，以便观察Timer的回调
+            //Console.WriteLine(DateTime.Now);
+            //Console.WriteLine("Waiting for the random trigger...");
+            Console.ReadLine();   
+        }
+
+
+        private static void Callback(Object o)
+        {
+            Console.WriteLine("Triggered at a random time within 1 minute!");
+            // 在这里执行你想要的操作
+            Console.WriteLine(DateTime.Now);
+        }
+
+        public static void test2()
+        {
+
+        }
+
+        public static void test1()
         {
             //var counter = 0;
             //var max = args.Length != 0 ? Convert.ToInt32(args[0]) : -1;
@@ -45,8 +80,6 @@ namespace ConsoleApp1
               ts1.Milliseconds / 10);
             Console.WriteLine(sb.ToString());
             Console.WriteLine("StringBuilder:{0}", elapsedTime1);
-
-            Console.ReadKey();
         }
     }
 }
